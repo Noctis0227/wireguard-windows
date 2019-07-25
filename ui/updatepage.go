@@ -33,18 +33,30 @@ func NewUpdatePage() (*UpdatePage, error) {
 
 	up.SetLayout(walk.NewVBoxLayout())
 
-	instructions, _ := walk.NewTextLabel(up)
+	instructions, err := walk.NewTextLabel(up)
+	if err != nil {
+		return nil, err
+	}
 	instructions.SetText("An update to WireGuard is available. It is highly advisable to update without delay.")
 	instructions.SetMinMaxSize(walk.Size{1, 0}, walk.Size{0, 0})
 
-	status, _ := walk.NewTextLabel(up)
+	status, err := walk.NewTextLabel(up)
+	if err != nil {
+		return nil, err
+	}
 	status.SetText("Status: Waiting for user")
 	status.SetMinMaxSize(walk.Size{1, 0}, walk.Size{0, 0})
 
-	bar, _ := walk.NewProgressBar(up)
+	bar, err := walk.NewProgressBar(up)
+	if err != nil {
+		return nil, err
+	}
 	bar.SetVisible(false)
 
-	button, _ := walk.NewPushButton(up)
+	button, err := walk.NewPushButton(up)
+	if err != nil {
+		return nil, err
+	}
 	updateIcon, _ := loadSystemIcon("shell32", 46, 32)
 	button.SetImage(updateIcon)
 	button.SetText("Update Now")
