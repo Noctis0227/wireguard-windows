@@ -19,12 +19,16 @@ type UpdatePage struct {
 }
 
 func NewUpdatePage() (*UpdatePage, error) {
-	up := &UpdatePage{}
 	var err error
+	var disposables walk.Disposables
+	defer disposables.Treat()
+
+	up := &UpdatePage{}
 
 	if up.TabPage, err = walk.NewTabPage(); err != nil {
 		return nil, err
 	}
+	disposables.Add(up)
 
 	up.SetTitle("An Update is Available!")
 
@@ -124,6 +128,8 @@ func NewUpdatePage() (*UpdatePage, error) {
 			}
 		})
 	})
+
+	disposables.Spare()
 
 	return up, nil
 }
